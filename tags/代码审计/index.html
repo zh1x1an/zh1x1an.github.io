@@ -37,14 +37,14 @@
 <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
 
 
+<script id="dsq-count-scr" src="//zh1x1an.disqus.com.disqus.com/count.js" async></script>
 
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
 
 <script src="/js/iconfont.js?v=1.0.1" ></script>
 
 </head>
 <div style="display: none">
-  <input class="theme_disqus_on" value="false">
+  <input class="theme_disqus_on" value="true">
   <input class="theme_preload_comment" value="false">
   <input class="theme_blog_path" value="">
 </div>
@@ -243,6 +243,57 @@
         </article>
         
         
+    <section id="comments" class="disqus">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = 'http://zh1x1an.com/';
+            this.page.identifier = 'tags/代码审计/index.html';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//zh1x1an.disqus.com.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <aside class="comment-bar">
+        <a>
+            <i class="fa fa-commenting-o animated infinite pulse"></i>
+            <i class="fa fa-spinner fa-pulse"></i>
+            <span class="count-comment"></span>
+        </a>
+    </aside>
+    <script>
+        var isLoadComments = false;
+        var $commentBar = $("#comments aside.comment-bar");
+        var load$hide = function(){
+            if(isLoadComments){
+                return;
+            }
+            isLoadComments = true;
+            if(isLoadComments )
+            $commentBar.find("a > i").toggle();
+            loadComment();
+            $commentBar.fadeOut(800);
+        }
+        $commentBar.click(function(){
+            load$hide();
+        })
+        $commentBar.children("a").mouseenter(function(){
+            load$hide();
+        })
+    </script>
+
+
+</section>
+
+<!-- Add comment count-->
+<span class="disqus-comment-count" style="display: none" data-disqus-identifier="tags/代码审计/index.html"></span>
+<span class="disqus-comment-count" style="display: none" data-disqus-url=""></span>
+
     </div>
     <div class="copyright">
         <p class="footer-entry">©2016-2019 Yelog</p>
