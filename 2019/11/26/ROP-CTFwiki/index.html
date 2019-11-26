@@ -252,19 +252,19 @@
         </a>
         
         <a  class="代码审计 漏洞复现 PHP "
-           href="/2019/11/19/phpmyadmin-4-8-1-%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E-CVE-2018-12613/"
-           data-tag="代码审计,漏洞复现,PHP"
-           data-author="" >
-            <span class="post-title" title="phpmyadmin 4.8.1 远程文件包含漏洞(CVE-2018-12613)">phpmyadmin 4.8.1 远程文件包含漏洞(CVE-2018-12613)</span>
-            <span class="post-date" title="2019-11-19 01:33:55">2019/11/19</span>
-        </a>
-        
-        <a  class="代码审计 漏洞复现 PHP "
            href="/2019/11/17/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
            data-tag="代码审计,漏洞复现,PHP"
            data-author="" >
             <span class="post-title" title="PHP代码审计环境搭建">PHP代码审计环境搭建</span>
             <span class="post-date" title="2019-11-17 23:46:05">2019/11/17</span>
+        </a>
+        
+        <a  class="代码审计 漏洞复现 PHP "
+           href="/2019/11/19/phpmyadmin-4-8-1-%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E-CVE-2018-12613/"
+           data-tag="代码审计,漏洞复现,PHP"
+           data-author="" >
+            <span class="post-title" title="phpmyadmin 4.8.1 远程文件包含漏洞(CVE-2018-12613)">phpmyadmin 4.8.1 远程文件包含漏洞(CVE-2018-12613)</span>
+            <span class="post-date" title="2019-11-19 01:33:55">2019/11/19</span>
         </a>
         
     </nav>
@@ -307,12 +307,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-26 23:28:18'>2019-11-26 23:21</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-26 23:34:33'>2019-11-26 23:21</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:329</span>
+        <span>字数:372</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -390,6 +390,12 @@ p.interactive()</code></pre>
 <pre><code class="bash">checksec ret2shellcode</code></pre>
 <p>没有保护，开了 NX 就意味着有 rwx 段，可以从 gdb 中 vmmap 看到，或者 </p>
 <pre><code class="bash">cat /proc/`pidof ret2shellcode`/maps</code></pre>
+<ol>
+<li>get 处 offset 不变，还是 112</li>
+<li>覆盖返回地址，retrun to gets 的 plt entry </li>
+<li>用这个新的 gets 将 shellcode 读到 buf 上  </li>
+<li>同时跳转到 buf 执行 shellcode 即可</li>
+</ol>
 <p>exp：</p>
 <pre><code class="bash">from pwn import *
 p = process(&quot;./ret2shellcode&quot;)
@@ -422,10 +428,10 @@ p.interactive()</code></pre>
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>ROP - CTFwiki</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">329</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">372</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-26, 23:21:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-26, 23:28:18</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-26, 23:34:33</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/26/ROP-CTFwiki/" title="ROP - CTFwiki">http://zh1x1an.com/2019/11/26/ROP-CTFwiki/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
