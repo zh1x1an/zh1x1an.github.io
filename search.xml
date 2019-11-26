@@ -15,8 +15,6 @@
           
           <category> PWN </category>
           
-          <category> ROP </category>
-          
       </categories>
       
       
@@ -46,8 +44,6 @@
           
           <category> 漏洞复现 </category>
           
-          <category> PHP </category>
-          
       </categories>
       
       
@@ -56,8 +52,6 @@
             <tag> 代码审计 </tag>
             
             <tag> 漏洞复现 </tag>
-            
-            <tag> PHP </tag>
             
         </tags>
       
@@ -79,8 +73,6 @@
           
           <category> 漏洞复现 </category>
           
-          <category> PHP </category>
-          
       </categories>
       
       
@@ -89,8 +81,6 @@
             <tag> 代码审计 </tag>
             
             <tag> 漏洞复现 </tag>
-            
-            <tag> PHP </tag>
             
         </tags>
       
