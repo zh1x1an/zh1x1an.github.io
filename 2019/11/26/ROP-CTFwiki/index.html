@@ -5,16 +5,16 @@
   <title>ROP - CTFwiki | Hexo</title>
   <meta name="keywords" content=" PWN , ROP ">
   <meta name="description" content="ROP - CTFwiki | Hexo">
-  <!--<script>-->
-      <!--(function(){-->
-          <!--if('{{ page.password }}'){-->
-              <!--if (prompt('请输入文章密码') !== '{{ page.password }}'){-->
-                  <!--alert('密码错误！');-->
-                  <!--history.back();-->
-              <!--}-->
-          <!--}-->
-      <!--})();-->
-  <!--</script>-->
+  <script>
+      (function(){
+          if('{{ page.password }}'){
+              if (prompt('请输入文章密码') !== '{{ page.password }}'){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="知弦 Security Researcher @ Chaitin I is a dd.">
 <meta property="og:type" content="website">
@@ -295,7 +295,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-28 04:06:49'>2019-11-26 23:21</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-28 04:11:16'>2019-11-26 23:21</time>
         
     </div>
     <div class="article-meta">
@@ -367,7 +367,7 @@
     <p><span class="copy-title">文章字数:</span><span class="post-count">2</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-26, 23:21:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-28, 04:06:49</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-28, 04:11:16</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/26/ROP-CTFwiki/" title="ROP - CTFwiki">http://zh1x1an.com/2019/11/26/ROP-CTFwiki/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
