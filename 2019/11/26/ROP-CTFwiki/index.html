@@ -285,7 +285,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-06 03:53:37'>2019-11-26 23:21</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-06 03:56:46'>2019-11-26 23:21</time>
         
     </div>
     <div class="article-meta">
@@ -320,7 +320,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2text"><span class="toc-text">ret2text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2shellcode-NX-off"><span class="toc-text">ret2shellcode (NX off)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2syscall（NX-on）"><span class="toc-text">ret2syscall（NX on）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2libc1-NX-on"><span class="toc-text">ret2libc1 (NX on)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ret2libc2"><span class="toc-text">ret2libc2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ret2libc3"><span class="toc-text">ret2libc3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2text"><span class="toc-text">ret2text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2shellcode-NX-off"><span class="toc-text">ret2shellcode (NX off)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2syscall（NX-on）"><span class="toc-text">ret2syscall（NX on）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2libc"><span class="toc-text">ret2libc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ret2libc1-NX-on"><span class="toc-text">ret2libc1 (NX on)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ret2libc2"><span class="toc-text">ret2libc2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ret2libc3"><span class="toc-text">ret2libc3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -434,7 +434,7 @@ payload = &#39;\x90&#39;*112 + p32(pop_eax) + p32(11) + p32(pop_edx_ecx_ebx) + p
 
 p.sendline(payload)
 p.interactive()</code></pre>
-<h2 id="ret2libc1-NX-on"><a href="#ret2libc1-NX-on" class="headerlink" title="ret2libc1 (NX on)"></a>ret2libc1 (NX on)</h2><blockquote>
+<h2 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h2><h3 id="ret2libc1-NX-on"><a href="#ret2libc1-NX-on" class="headerlink" title="ret2libc1 (NX on)"></a>ret2libc1 (NX on)</h3><blockquote>
 <p>程序下载链接：<a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc1/ret2libc1" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc1/ret2libc1</a></p>
 </blockquote>
 <p>offset 不变，可以通过 <code>elf.symbols[&#39;system&#39;]</code> 得到 system 的地址，再用 <code>ROPgadget --binary ./ret2libc1 --str &#39;/bin/sh</code> 拿到 /bin/sh 的地址即可。</p>
@@ -561,7 +561,7 @@ p.interactive()</code></pre>
     <p><span class="copy-title">文章字数:</span><span class="post-count">1.5k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-26, 23:21:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-06, 03:53:37</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-06, 03:56:46</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/26/ROP-CTFwiki/" title="ROP - CTFwiki">http://zh1x1an.com/2019/11/26/ROP-CTFwiki/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
