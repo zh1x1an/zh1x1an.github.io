@@ -133,7 +133,7 @@
     
         
             
-            <li><div data-rel="PWN">PWN<small>(1)</small></div>
+            <li><div data-rel="代码审计">代码审计<small>(2)</small></div>
                 
             </li>
             
@@ -141,7 +141,7 @@
     
         
             
-            <li><div data-rel="代码审计">代码审计<small>(2)</small></div>
+            <li><div data-rel="PWN">PWN<small>(1)</small></div>
                 
             </li>
             
@@ -166,7 +166,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="3">
-<input type="hidden" id="yelog_site_word_count" value="2.3k">
+<input type="hidden" id="yelog_site_word_count" value="2.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -198,19 +198,19 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a class="color4">PWN</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">ROP</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color5">代码审计</a>
     </li>
     
     <li class="article-tag-list-item">
         <a class="color5">漏洞复现</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">PWN</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">ROP</a>
     </li>
     
     <div class="clearfix"></div>
@@ -223,20 +223,20 @@
     
     <nav id="title-list-nav">
         
-        <a  class="PWN "
-           href="/2019/11/26/ROP-CTFwiki/"
-           data-tag="PWN,ROP"
-           data-author="" >
-            <span class="post-title" title="ROP - CTFwiki">ROP - CTFwiki</span>
-            <span class="post-date" title="2019-11-26 23:21:07">2019/11/26</span>
-        </a>
-        
         <a  class="代码审计 漏洞复现 "
            href="/2019/11/17/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
            data-tag="代码审计,漏洞复现"
            data-author="" >
             <span class="post-title" title="PHP代码审计环境搭建">PHP代码审计环境搭建</span>
             <span class="post-date" title="2019-11-17 23:46:05">2019/11/17</span>
+        </a>
+        
+        <a  class="PWN "
+           href="/2019/11/26/ROP-CTFwiki/"
+           data-tag="PWN,ROP"
+           data-author="" >
+            <span class="post-title" title="ROP - CTFwiki">ROP - CTFwiki</span>
+            <span class="post-date" title="2019-11-26 23:21:07">2019/11/26</span>
         </a>
         
         <a  class="代码审计 漏洞复现 "
@@ -285,12 +285,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-06 03:45:58'>2019-11-26 23:21</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-06 03:53:37'>2019-11-26 23:21</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.4k</span>
+        <span>字数:1.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -540,7 +540,11 @@ payload2 = &#39;a&#39;*104 + p32(system_addr) + p32(0xdeadbeef) + p32(sh_addr)
 
 p.sendline(payload2)
 p.interactive()</code></pre>
-<p>其中选择：ubuntu-xenial-i386-libc6 (id libc6_2.23-0ubuntu10_i386)，也就是 3</p>
+<p>需要注意的问题：</p>
+<ol>
+<li>选择：ubuntu-xenial-i386-libc6 (id libc6_2.23-0ubuntu10_i386)，也就是 3。</li>
+<li>padding2 比 padding1 少 8 字节，原因是第二次 retrun 回 main 中，有栈对齐的指令 <code>0x804861b &lt;main+3&gt; and esp, 0xfffffff0</code>。不过一般确定第二次 padding 大小，就是加上 gdb.attach(p)，在 get@plt 下断，然后手动再判断一次长度。<strong>或者使用 rop slide 也可以，也就是在栈上放置多个 ret 指令。</strong></li>
+</ol>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <p><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/#ret2shellcode" target="_blank" rel="noopener">https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/#ret2shellcode</a></p>
 </blockquote>
@@ -554,10 +558,10 @@ p.interactive()</code></pre>
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>ROP - CTFwiki</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1.4k</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.5k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
     <p><span class="copy-title">发布时间:</span>2019-11-26, 23:21:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-06, 03:45:58</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-06, 03:53:37</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/26/ROP-CTFwiki/" title="ROP - CTFwiki">http://zh1x1an.com/2019/11/26/ROP-CTFwiki/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -654,7 +658,7 @@ p.interactive()</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#PWN','#ROP','#代码审计','#漏洞复现',],
+            'data': ['#代码审计','#漏洞复现','#PWN','#ROP',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
