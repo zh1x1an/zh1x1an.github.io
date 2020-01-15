@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>ThinkPHP 6 任意文件写入</title>
+      <link href="/2020/01/15/ThinkPHP-6-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5/"/>
+      <url>/2020/01/15/ThinkPHP-6-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="漏洞概述"><a href="#漏洞概述" class="headerlink" title="漏洞概述"></a>漏洞概述</h2><p>在 ThinkPHP 6.0.0 以及 6.0.1 两个版本中，如果服务端在全局中间件定义文件中开启了 Session 初始化，并且攻击者可控任意一个 session 的值，就可利用写入 session 文件的功能做到写入任意文件 getshell 。</p><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>使用 composer 命令安装 ThinkPHP：</p><pre><code class="bash">composer create-project topthink/think tp</code></pre><p>在全局中间件定义文件 tp/app/middleware.php:10 行的位置，添加开启 Session 初始化的配置：</p><p><img src="../../../../img/tp6_1.png" alt=""></p><p>同时删除补丁中对于 $id 的过滤：</p><p><img src="../../../../img/tp6_2.png" alt=""></p><p>为了便于测试，我们在 tp/app/controller/Index.php/ 文件中，添加如下代码，模拟 session 值可控：</p><p><img src="../../../../img/tp6_3.png" alt=""></p><h2 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h2><p>调整环境如上，发送如下请求包：</p><pre><code>GET /tp/public/index.php/index/index/index?c=%3C?php%20phpinfo()%3B%2F%2F HTTP/1.1Cookie: XDEBUG_SESSION=PHPSTORM; PHPSESSID=/../../../../123456789012345.php;Host: 127.0.0.1:9090Connection: closeUser-Agent: Paw/3.1.10 (Macintosh; OS X/10.15.2) GCDHTTPRequest</code></pre><p><img src="../../../../img/tp6_4.png" alt=""></p><h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>如果 cms 使用了存在上述漏洞的 tp6 框架，并且在开发逻辑中存在可控的 session 值，才能做到如上效果，我们看一下发送的请求：</p><pre><code>/tp/public/index.php/index/index/index?c=%3C?php%20phpinfo()%3B%2F%2F</code></pre><p>上述请求的路由很清晰，访问 index 模块儿 、index 控制器、 index 方法，击中断点后，赋值 session ：</p><p><img src="../../../../img/tp6_5.png" alt=""></p><p><img src="../../../../img/tp6_6.png" alt=""></p><p>当整个 HTTP 请求结束后，会进入 end 方法，其中会执行中间件的一些行为：</p><p><img src="../../../../img/tp6_7.png" alt=""></p><p>跟进：</p><p><img src="../../../../img/tp6_8.png" alt=""></p><p>这里的 end 方法会进入中间件的 Session 初始化功能，也就是 SessionInit.php 。我们已经在前文中提前开启了该配置，所以可以跟进：</p><p><img src="../../../../img/tp6_9.png" alt=""></p><p>Session 初始化结束后，会保存相应的 session 文件，文件名来源于用户传入的 Cookie 中 PHPSESSID 的值，文件内容来源于 session 的值，但是会被序列化一次：</p><p><img src="../../../../img/tp6_10.png" alt=""></p><p>需要注意的是，我们传入的 PHPSESSID 值长度必须为 32 个字符，否则无法进入写 session 的逻辑：</p><p><img src="../../../../img/tp6_11.png" alt=""></p><p>成功写入 session 文件，为了防止由于序列化导致的字符错误，我们需要在 session 的值加入尾注释来避免字符错误（类似于 sql 注入中的尾注释）</p><p>最终写入的文件存储于 /Users/Sites/123456789012345.php ，也就是我的测试环境的 Web 根目录：</p><p><img src="../../../../img/tp6_12.png" alt=""></p><p>由于 tp6 使用量较少，漏洞利用条件较繁琐，所以此漏洞较难利用。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://paper.seebug.org/1114/" target="_blank" rel="noopener">https://paper.seebug.org/1114/</a></p><p><a href="https://www.anquanke.com/post/id/197261" target="_blank" rel="noopener">https://www.anquanke.com/post/id/197261</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 代码审计 </category>
+          
+          <category> 漏洞复现 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 代码审计 </tag>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Gogs 远程代码执行 (CVE-2018-18925)</title>
       <link href="/2020/01/14/Gogs-%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-CVE-2018-18925/"/>
       <url>/2020/01/14/Gogs-%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-CVE-2018-18925/</url>
