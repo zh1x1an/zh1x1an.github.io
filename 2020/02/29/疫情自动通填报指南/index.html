@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Hexo">
+  <title>疫情自动通填报指南 | Hexo</title>
+  <meta name="keywords" content=" coding ">
+  <meta name="description" content="疫情自动通填报指南 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="知弦 Security Researcher @ Chaitin , member of XDSEC &amp;amp; L-team. I is a dd.">
 <meta property="og:type" content="website">
@@ -50,7 +50,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -309,12 +309,68 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-疫情自动通填报指南" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何成为一名带黑客"><span class="toc-text">如何成为一名带黑客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一直学习就可以了"><span class="toc-text">一直学习就可以了</span></a></li></ol></li></ol>
+        <h1 class="article-title">疫情自动通填报指南</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="coding">coding</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color2">coding</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-02-29 01:08:23'>2020-02-29 00:59</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:714</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#故事还要从一只蝙蝠说起（笑）"><span class="toc-text">故事还要从一只蝙蝠说起（笑）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python-自动填疫情通"><span class="toc-text">python 自动填疫情通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计划任务"><span class="toc-text">计划任务</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -327,18 +383,81 @@
     }
 </style>
 </div>
-            <h1 id="如何成为一名带黑客"><a href="#如何成为一名带黑客" class="headerlink" title="如何成为一名带黑客"></a>如何成为一名带黑客</h1><h2 id="一直学习就可以了"><a href="#一直学习就可以了" class="headerlink" title="一直学习就可以了"></a>一直学习就可以了</h2><p><img src="img/yizhixuexijiukeyile.jpg" alt=""></p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="故事还要从一只蝙蝠说起（笑）"><a href="#故事还要从一只蝙蝠说起（笑）" class="headerlink" title="故事还要从一只蝙蝠说起（笑）"></a>故事还要从一只蝙蝠说起（笑）</h2><p>作为一只快乐的死宅，假期每天必须要快乐睡到自然醒。然而此时出现了一股邪恶势力：</p>
+<p><img src="../../../../img/yqt_1.jpg" alt=""></p>
+<p>为了配合疫情状况统计，要么每天凌晨的时候填疫情通，要么在早上 12 点前早起填疫情通。无论选哪个都非常的不快乐，不符合死宅的价值观。一旦忘了还要被全院通报。连女朋友都要熬到凌晨填完疫情通才敢睡觉。（中日双语</p>
+<p>所以打算 15 行 python 配合 crontab，以一个死宅的方式解决这个恶心的问题。</p>
+<h2 id="python-自动填疫情通"><a href="#python-自动填疫情通" class="headerlink" title="python 自动填疫情通"></a>python 自动填疫情通</h2><p>首先，从手机上找到西安电子科技大学疫情通登陆的链接，登陆获得 cookie</p>
+<p><a href="https://xxcapp.xidian.edu.cn/uc/wap/login?redirect=https%3A%2F%2Fxxcapp.xidian.edu.cn%2Fncov%2Fwap%2Fdefault%2Findex" target="_blank" rel="noopener">https://xxcapp.xidian.edu.cn/uc/wap/login?redirect=https%3A%2F%2Fxxcapp.xidian.edu.cn%2Fncov%2Fwap%2Fdefault%2Findex</a></p>
+<p><img src="../../../../img/yqt_2.jpg" alt=""></p>
+<p><img src="../../../../img/yqt_3.jpg" alt=""></p>
+<p>有姓名，学号，是否在校等等信息需要填。这些无所谓，先构思 python 脚本的实现：</p>
+<ol>
+<li>用 requests session 先登陆，然后 post 相应的表单信息（优点：不用担心 cookie 过期；缺点：写完可能要 20 多行，不能体现死宅懒惰的本性）</li>
+<li>用 burp 抓到提交的表单信息，直接转 requests（优点：简单，十几行就写完；缺点：cookie 过期后需要再换）</li>
+</ol>
+<p>当然是快乐的选择第二条，但是仍然有几个问题需要解决：</p>
+<ul>
+<li>浏览器 F12 调试</li>
+</ul>
+<p><img src="../../../../img/yqt_4.jpg" alt=""></p>
+<p>在前端有一次判断，如果今天已经手动提交过了，this.hashflag 会被设置为 true，需要手动设置为 0 才能绕过，否则无法让 burp 抓到包。</p>
+<p><img src="../../../../img/yqt_5.jpg" alt=""></p>
+<ul>
+<li>任意所在地</li>
+</ul>
+<p>大约是 5 天前在我实现自动提交的时候，pc 端的自动获取所在地是无法使用的，只有手机可以用：</p>
+<p><img src="../../../../img/yqt_6.jpg" alt=""></p>
+<p>虽然现在的 pc 端也是可以一键调用接口拿到所在地，但是也有可能其他的浏览器 js 在这里也报错：</p>
+<p><img src="../../../../img/yqt_7.jpg" alt=""></p>
+<p>断点在 512 行，会拼接 <code>省 市 区</code> 得到 info.area。然后回到 498 行，判断是否正确获取到了所在地。之前我在 512 行拼接 info.area 的时候会报错，需要手动按照指定格式设置为 <code>陕西省 西安市 雁塔区</code>。</p>
+<p><img src="../../../../img/yqt_8.jpg" alt=""></p>
+<p>控制台静音所有断点，放过，用 burp 抓到请求包：</p>
+<p><img src="../../../../img/yqt_9.jpg" alt=""></p>
+<p>用快乐插件 Copy as requests 生成 python：</p>
+<p><img src="../../../../img/yqt_10.jpg" alt=""></p>
+<p>记得替换 POST 数据中的 date 为动态的 today。</p>
+<h2 id="计划任务"><a href="#计划任务" class="headerlink" title="计划任务"></a>计划任务</h2><p>因为每天的凌晨 0:00 开始就可以填了，所以我选择计划任务设定在 0:01 和 0:02 。</p>
+<pre><code class="bash">crontab -e
 
-        </article>
-        
-        
+crontab -l
+
+1,2 0 * * * /usr/local/bin/python /Users/zh1x1an/PycharmProjects/t1/tt.py &gt;&gt; /tmp/zh1x1an.txt</code></pre>
+<p>并且我们理论上会得到两次不同的结果，一次是填报成功，一次是已经填过：</p>
+<p><img src="../../../../img/yqt_11.jpg" alt=""></p>
+<p>快乐，继续睡到自然醒（</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>疫情自动通填报指南</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">714</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="知弦">知弦</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-02-29, 00:59:21</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-29, 01:08:23</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/29/%E7%96%AB%E6%83%85%E8%87%AA%E5%8A%A8%E9%80%9A%E5%A1%AB%E6%8A%A5%E6%8C%87%E5%8D%97/" title="疫情自动通填报指南">http://zh1x1an.com/2020/02/29/%E7%96%AB%E6%83%85%E8%87%AA%E5%8A%A8%E9%80%9A%E5%A1%AB%E6%8A%A5%E6%8C%87%E5%8D%97/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
     <section id="comments" class="disqus">
     <style> aside.comment-bar { margin: auto 30px; }</style>
     <div id="disqus_thread"></div>
     <script>
         var disqus_config = function(){
-            this.page.url = 'http://zh1x1an.com/';
-            this.page.identifier = 'categories/漏洞复现/index.html';
+            this.page.url = 'http://zh1x1an.com/2020/02/29/%E7%96%AB%E6%83%85%E8%87%AA%E5%8A%A8%E9%80%9A%E5%A1%AB%E6%8A%A5%E6%8C%87%E5%8D%97/';
+            this.page.identifier = '2020/02/29/疫情自动通填报指南/';
         };
         var loadComment = function(){
             var d = document, s = d.createElement('script');
@@ -380,8 +499,15 @@
 </section>
 
 <!-- Add comment count-->
-<span class="disqus-comment-count" style="display: none" data-disqus-identifier="categories/漏洞复现/index.html"></span>
-<span class="disqus-comment-count" style="display: none" data-disqus-url=""></span>
+<span class="disqus-comment-count" style="display: none" data-disqus-identifier="2020/02/29/疫情自动通填报指南/"></span>
+<span class="disqus-comment-count" style="display: none" data-disqus-url="http://zh1x1an.com/2020/02/29/%E7%96%AB%E6%83%85%E8%87%AA%E5%8A%A8%E9%80%9A%E5%A1%AB%E6%8A%A5%E6%8C%87%E5%8D%97/"></span>
+
+
+
+
+    
+
+
 
 
     </div>
